@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Lightbox Project</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
+	<!-- JavaScript -->
+	<script src="scripts/jquery.js"></script>
+    <script src="scripts/lightbox_project.js"></script>
+    <script src="scripts/calls.js"></script>
+	
+</head>
+
+<body>
+    <div class="skipto">
+        <a class="skipto__link" title="Link that skips to main content"  href="#">These are</a>
+        <a class="skipto__link" title="Link that skips to search"  href="#">Just Here</a>
+        <a class="skipto__link" title="Link that skips to navigation"  href="#">To Demonstrate</a>
+        <a class="skipto__link" title="Link that skips to footer"  href="#">Accessibility Tabbing</a>
+    </div>    
+    <!-- Standard Template Starts -->
+    <div class="maincontent" role="main" id="maincontent">
+        <div class="container">
+
+            <!-- Heading Starts -->
+            <div class="a-heading a-heading--myaccount">
+                <h1 class="a-heading__title">
+                    Lightbox testing
+                </h1>
+            </div>
+
+            <!-- Intro Starts -->
+            <div class="a-intro">
+                <p class="a-intro__content">
+                    Making an accessible lightbox
+                </p>
+            </div>
+
+            <!-- Body Starts -->
+            <div class="a-body ">
+                <p>
+                    Simon's Lightbox
+                </p>
+            </div>
+            <a href="#" class="slightbox" data-slightbox-title="data image" data-image-link="images/goss.jpg">Link with data image</a><br><br>
+            <a href="#" id="map" class="btn slightbox" data-link-html="modalContent"  data-slightbox-title="I am a modal"  alt="map">Link to lightbox</a><br>
+            <br>
+            <div id="modalContent" class="hidden">
+                <a href="#">Testing</a>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d81402.27660329673!2d-4.182609287183796!3d50.38853262309487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x486c8d530e95ea3d%3A0x3b282cb5cef58593!2sPlymouth!5e0!3m2!1sen!2suk!4v1507823357037"  width="100%" max-width="800px" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                <p>also testing</p>
+            </div>
+            <br>
+            <p>Vestibulum vitae lectus efficitur, ornare nisl et, ornare magna. Donec turpis tellus, convallis quis pellentesque at, sagittis ut orci. Quisque ante orci, bibendum at ullamcorper et, suscipit ultricies lacus. Nam tempor risus et rhoncus varius. Sed facilisis ex sit amet dolor pulvinar volutpat. Fusce faucibus, lectus ut fermentum dictum, dolor orci congue ligula, nec elementum velit dolor et elit. Nunc dignissim faucibus dolor et venenatis. Duis vel elit congue, imperdiet elit id, rhoncus felis. Nullam vitae tellus eleifend, vestibulum ipsum vel, pulvinar nisi. Donec tincidunt, diam vel vestibulum tempus, mi odio blandit velit, non tempus ligula diam a purus.</p>
+            <hr/>
+            <a id="link" href="#" class="slightbox" data-iframe="http://simonjarvis.me" data-slightbox-title="I have a title" data-slightbox-desc="I have a description">Link with data iframe</a>
+            <br><br>
+            <img src="images/goss.jpg" alt="goss logo" data-slightbox-title="I have a title" style="max-width:200px" >
+            <img src="images/thisone.jpg" class="slightbox" alt="goss logo" style="max-width:200px" >
+            <hr/>
+            <!-- WORKING ON GALLERY SUPPORT -->
+
+            <h2>Gallary Mode:</h2>
+            <div class="gallerywrap">
+                <ul class="gallery">
+                    <li><img class="sb-group" src="images/goss.jpg" alt="goss logo" data-slightbox-title="I have a title" style="max-width:200px" ></li>
+                    <li><img src="images/goss2.jpg" alt="goss logo" data-slightbox-title="I have a title" style="max-width:200px" ></li>
+                    <li><img src="images/goss3.jpg" alt="goss logo" data-slightbox-title="I have a title" style="max-width:200px" ></li>
+                    <li><img src="images/goss4.jpg" alt="goss logo" data-slightbox-title="I have a title" style="max-width:200px" ></li>
+                    <li><img src="images/goss5.jpg" alt="goss logo" data-slightbox-title="I have a title" style="max-width:200px" ></li>
+                </ul>
+            </div>
+            <br>
+            <p>Simon Jarvis</p>
+            <br>
+        </div>
+    </div>
+    <script>
+       
+    </script>
+</body>
+
+</html>
