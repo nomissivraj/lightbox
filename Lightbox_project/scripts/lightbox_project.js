@@ -123,10 +123,15 @@ function buildLightbox(e, el, w, h) {
 function buildCaption(e,el) {
     var caption = document.createElement('div');
     caption.setAttribute("class", "lightbox__caption");
-    var captionContent = document.createElement('p');
+    console.log(el);
     // build div with p element in and write logic to pull
-    // caption from either alt tag or data tag if showCaption is set true
-    caption = "tadaa";
+    //caption from either alt tag or data tag if showCaption is set true
+    var captionContent = document.createElement('p'); //does this need to be tabindex 0?
+    var text = el.alt || el.data.lightboxTitle; // getting text
+    captionContent.innerHTML = text;
+    
+    caption.appendChild(captionContent);
+
     return caption;
 }
 
@@ -160,7 +165,7 @@ function buildImage(e, el) {
     
     //caption
     if (showCaption) {
-        buildCaption();
+        newContent.appendChild(buildCaption(e, el));
     }
     //showCaption ? buildCaption(): console.log("captions disabled");
     ///
