@@ -129,7 +129,8 @@ function buildCaption(e,el) {
     var captionContent = document.createElement('p'); //does this need to be tabindex 0?
     var text = el.alt || el.data.lightboxTitle; // getting text
     captionContent.innerHTML = text;
-    
+    captionContent.id ="dialogueTitle";
+    captionContent.classList += "lightbox-caption";
     caption.appendChild(captionContent);
 
     return caption;
