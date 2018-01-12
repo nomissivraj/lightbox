@@ -127,6 +127,7 @@ function buildCaption(e,el) {
     // build div with p element in and write logic to pull
     //caption from either alt tag or data tag if showCaption is set true
     var captionContent = document.createElement('p'); //does this need to be tabindex 0?
+    //check if either alt or data exists before attempting [DO THIS]
     var text = el.alt || el.data.lightboxTitle; // getting text
     captionContent.innerHTML = text;
     captionContent.id ="dialogueTitle";
