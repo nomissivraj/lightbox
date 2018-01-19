@@ -1,13 +1,13 @@
 window.onload = function() {
-    initLightbox('slightbox');
+    initLightbox('lightbox');
 }
 
 document.addEventListener("click", function(){
-    var slightbox = document.getElementsByClassName('slightbox__overlay');// Get actionable element
+    var lightbox = document.getElementsByClassName('lightbox__overlay');// Get actionable element
     var closeBtn = document.getElementById('close');
-    // If slightbox is clicked toggle hide 
+    // If lightbox is clicked toggle hide 
     window.onclick = function(event) {
-        if (event.target == slightbox[0] || event.target == closeBtn) {
+        if (event.target == lightbox[0] || event.target == closeBtn) {
             closeLightbox()
         }
     }   
@@ -15,12 +15,12 @@ document.addEventListener("click", function(){
 
 window.addEventListener("resize", function() {
     if (isOpen()) {
-        slightboxPos();
+        lightboxPos();
     }
 });
 
 window.onchange = function() {
     if (isOpen()) {
-        slightboxPos();
+        lightboxPos();
     }
 };

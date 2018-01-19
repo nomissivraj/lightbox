@@ -13,7 +13,7 @@ var imageModeAll = true;
 var showCaption = true;
 var lastId;
 //Build individual components
-// Starts by finding all slightbox elements in the DOM identified either by class or 
+// Starts by finding all lightbox elements in the DOM identified either by class or 
 function hasClass(el,classname) {
     el = el.classList.toString();
     if (el.indexOf(classname) === 0) {
@@ -25,7 +25,7 @@ function initLightbox(selectedClass) {
     var classes = document.getElementsByClassName(selectedClass);
     for (i = 0; i < classes.length; i++) {
         elements.push(classes[i]);
-        // IF we want keyboard users to access the image - add tabindex 0 to .slightbox elements that are images
+        // IF we want keyboard users to access the image - add tabindex 0 to .lightbox elements that are images
     }
 
     if (imageModeAll === true) {
@@ -46,7 +46,7 @@ function initListen() {
         elements[i].id = "saveId"+i;
         elements[i].style.cursor = "pointer";
         elements[i].addEventListener('click', function(event){
-            beginSlightbox(event, this);
+            beginlightbox(event, this);
         });
         elements[i].addEventListener('blur', function(event){
             saveId(event, this);
@@ -54,7 +54,7 @@ function initListen() {
     }
 }
 function isOpen() {
-    var el = document.getElementsByClassName('slightbox__overlay');
+    var el = document.getElementsByClassName('lightbox__overlay');
     if (el[0]){
         return true;
     } else {
@@ -70,7 +70,7 @@ function saveId(id) {
     lastId = id.path[0];  
 }
 
-function beginSlightbox(e, el) {
+function beginlightbox(e, el) {
     //mode = el.nodeName === "IMG" || el.dataset.iframe ? "image" : false;
     if (el.nodeName === "IMG" || el.dataset.imageLink) {
         mode = "image";
@@ -90,7 +90,7 @@ function beginSlightbox(e, el) {
 ///Build lightbox Core
 function buildLightbox(e, el, w, h) {
     var lightboxElCont = document.createElement('div');
-    lightboxElCont.setAttribute("class", "slightbox__overlay");
+    lightboxElCont.setAttribute("class", "lightbox__overlay");
     /// give role and aria attr
     lightboxElCont.setAttribute("role", "dialogue");
     lightboxElCont.setAttribute("aria-labelledby", "dialogueTitle");
@@ -104,7 +104,7 @@ function buildLightbox(e, el, w, h) {
     } else if (mode === "iframe") {
         var lightboxEl = buildIframe();
     } else if (mode === "gallery") {
-        var lightboxEl = buildGallery();
+        var lightboxEl = buildSlides();
     } else {return false}
     
     
@@ -115,7 +115,7 @@ function buildLightbox(e, el, w, h) {
     if(document.body != null) { 
         document.body.appendChild(lightboxElCont);
     }
-    slightboxPos();
+    lightboxPos();
 }
 
 ///Build parts 
@@ -124,10 +124,7 @@ function buildCaption(e,el) {
     var caption = document.createElement('div');
     caption.setAttribute("class", "lightbox__caption");
     console.log(el);
-    // build div with p element in and write logic to pull
-    //caption from either alt tag or data tag if showCaption is set true
     var captionContent = document.createElement('p'); //does this need to be tabindex 0?
-    //check if either alt or data exists before attempting [DO THIS]
     var text = el.alt || el.data.lightboxTitle; // getting text
     captionContent.innerHTML = text;
     captionContent.id ="dialogueTitle";
@@ -148,7 +145,7 @@ function buildCloseBtn() {
 
 function buildModal() {
     var newContent = document.createElement('div');
-    newContent.setAttribute("class", "slightbox__content");
+    newContent.setAttribute("class", "lightbox__content");
     ///testing
     var testText = document.createElement('p');
     testText.innerHTML = "MODAL";
@@ -159,24 +156,23 @@ function buildModal() {
 
 function buildImage(e, el) {
     var newContent = document.createElement('div');
-    newContent.setAttribute("class", "slightbox__content");
+    newContent.setAttribute("class", "lightbox__content");
     ///testing
     var image = document.createElement('IMG');
     image.src = el.src || el.dataset.imageLink;
     newContent.appendChild(image);
     
     //caption
-    if (showCaption) {
+    if (showCaption && el.src) {
         newContent.appendChild(buildCaption(e, el));
     }
-    //showCaption ? buildCaption(): console.log("captions disabled");
-    ///
+
     return newContent; 
 }
 
 function buildIframe() {
     var newContent = document.createElement('div');
-    newContent.setAttribute("class", "slightbox__content");
+    newContent.setAttribute("class", "lightbox__content");
     ///testing
     var testText = document.createElement('p');
     testText.innerHTML = "IFRAME";
@@ -185,9 +181,10 @@ function buildIframe() {
     return newContent; 
 }
 
-function buildGallery() {
+function buildSlides() {
+    //If source is in a gallery, build slides for that gallery
     var newContent = document.createElement('div');
-    newContent.setAttribute("class", "slightbox__content");
+    newContent.setAttribute("class", "lightbox__content");
     ///testing
     var testText = document.createElement('p');
     testText.innerHTML = "GALLERY";
@@ -197,8 +194,8 @@ function buildGallery() {
 }
 
 // Handle positioning and size of lightbox
-function slightboxPos() {
-    var box = document.getElementsByClassName('slightbox__content');
+function lightboxPos() {
+    var box = document.getElementsByClassName('lightbox__content');
     var closeBtn = document.getElementById('close');
     //set width
     box[0].style.maxWidth = width + "px";
@@ -212,6 +209,6 @@ function slightboxPos() {
 }
 
 function closeLightbox() {
-    var el = document.getElementsByClassName('slightbox__overlay');
+    var el = document.getElementsByClassName('lightbox__overlay');
     el[0].remove();
 }
