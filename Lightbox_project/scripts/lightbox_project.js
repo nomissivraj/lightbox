@@ -4,9 +4,12 @@
 //save information relevant to each item
 //display content based on data and types
 
+//[TO CONSIDER: MOVE CONTENT DIV FROM MODULES INTO MAIN BUILD PANEL UNLESS UNIQUE CLASSES ARE NEEDED]
+//[WORKING IFRAME]
+
 var animation;
-var width = 400;
-var height = 400;
+var width = "400px";
+var height = "400px";
 var mode = "";
 var elements = [];
 var imageModeAll = true;
@@ -98,13 +101,13 @@ function buildLightbox(e, el, w, h) {
 
     // call function to make correct container box
     if (mode === "modal") {
-        var lightboxEl = buildModal();
+        var lightboxEl = buildModal(e, el);
     } else if (mode === "image") {
         var lightboxEl = buildImage(e, el);
     } else if (mode === "iframe") {
-        var lightboxEl = buildIframe();
+        var lightboxEl = buildIframe(e, el);
     } else if (mode === "gallery") {
-        var lightboxEl = buildSlides();
+        var lightboxEl = buildSlides(e, el);
     } else {return false}
     
     
@@ -125,7 +128,7 @@ function buildCaption(e,el) {
     caption.setAttribute("class", "lightbox__caption");
     console.log(el);
     var captionContent = document.createElement('p'); //does this need to be tabindex 0?
-    var text = el.alt || el.data.lightboxTitle; // getting text
+    var text = el.alt || el.dataset.lightboxTitle; // getting text
     captionContent.innerHTML = text;
     captionContent.id ="dialogueTitle";
     captionContent.classList += "lightbox-caption";
@@ -157,27 +160,28 @@ function buildModal() {
 function buildImage(e, el) {
     var newContent = document.createElement('div');
     newContent.setAttribute("class", "lightbox__content");
-    ///testing
     var image = document.createElement('IMG');
     image.src = el.src || el.dataset.imageLink;
     newContent.appendChild(image);
-    
-    //caption
-    if (showCaption && el.src) {
-        newContent.appendChild(buildCaption(e, el));
-    }
+    newContent.appendChild(buildCaption(e, el));
 
     return newContent; 
 }
 
-function buildIframe() {
+function buildIframe(e, el) {
+
+    //[WORKNING ON THIS BIT - width is fucked]
     var newContent = document.createElement('div');
-    newContent.setAttribute("class", "lightbox__content");
-    ///testing
-    var testText = document.createElement('p');
-    testText.innerHTML = "IFRAME";
-    newContent.appendChild(testText);
-    ///
+    newContent.classList.add("lightbox__content");
+    newContent.classList.add("lightbox__content--iframe");
+    var iframe = document.createElement('iframe');
+    iframe.src = el.dataset.iframe;
+    iframe.setAttribute('frameborder', "0");
+    iframe.setAttribute('allowfullscreen', "true");
+    iframe.style.width = "calc(100% - 10px)";
+    iframe.style.height = "calc(90% - 80px)";
+    //iframe.style.position = "absolute";
+    newContent.appendChild(iframe);
     return newContent; 
 }
 
@@ -198,7 +202,7 @@ function lightboxPos() {
     var box = document.getElementsByClassName('lightbox__content');
     var closeBtn = document.getElementById('close');
     //set width
-    box[0].style.maxWidth = width + "px";
+    box[0].style.maxWidth = width;
     //get total width/heights including paddings etc
     var newHeight = box[0].offsetHeight;
     var newWidth = box[0].offsetWidth;
