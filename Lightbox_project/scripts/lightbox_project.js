@@ -5,15 +5,21 @@
 //display content based on data and types
 
 //[TO CONSIDER: MOVE CONTENT DIV FROM MODULES INTO MAIN BUILD PANEL UNLESS UNIQUE CLASSES ARE NEEDED]
-//[WORKING IFRAME]
+//[WORKING ON: ]
 
+//Custom controls
+var generalWidth = "400px"
+var iframeWidth = "90%";
 var animation;
-var width = "400px";
-var height = "400px";
 var mode = "";
-var elements = [];
 var imageModeAll = true;
 var showCaption = true;
+
+
+// SET controls & Defaults
+var width = "400px";
+var height = "400px";
+var elements = [];
 var lastId;
 //Build individual components
 // Starts by finding all lightbox elements in the DOM identified either by class or 
@@ -74,6 +80,7 @@ function saveId(id) {
 }
 
 function beginlightbox(e, el) {
+    width = generalWidth;
     //mode = el.nodeName === "IMG" || el.dataset.iframe ? "image" : false;
     if (el.nodeName === "IMG" || el.dataset.imageLink) {
         mode = "image";
@@ -142,7 +149,7 @@ function buildCloseBtn() {
     closeBtn.setAttribute("id", "close");
     closeBtn.setAttribute("href", "#");
     closeBtn.setAttribute("alt", "close lightbox");
-    closeBtn.innerHTML = "X";
+    closeBtn.innerHTML = "close [x]";
     return closeBtn;
 }
 
@@ -170,7 +177,7 @@ function buildImage(e, el) {
 
 function buildIframe(e, el) {
 
-    //[WORKNING ON THIS BIT - width is fucked]
+    //[WORKNING ON THIS BIT - height is fucked]
     var newContent = document.createElement('div');
     newContent.classList.add("lightbox__content");
     newContent.classList.add("lightbox__content--iframe");
@@ -178,10 +185,11 @@ function buildIframe(e, el) {
     iframe.src = el.dataset.iframe;
     iframe.setAttribute('frameborder', "0");
     iframe.setAttribute('allowfullscreen', "true");
+    iframe.style.position = "absolute";
     iframe.style.width = "calc(100% - 10px)";
-    iframe.style.height = "calc(90% - 80px)";
-    //iframe.style.position = "absolute";
+    iframe.style.height = "calc(100% - 10px)";
     newContent.appendChild(iframe);
+    width = iframeWidth;
     return newContent; 
 }
 
