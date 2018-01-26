@@ -5,7 +5,8 @@
 //display content based on data and types
 
 //[TO CONSIDER: MOVE CONTENT DIV FROM MODULES INTO MAIN BUILD PANEL UNLESS UNIQUE CLASSES ARE NEEDED]
-//[WORKING ON: ]
+// REMEMBER TO ADD ARIA TITLE AND DESCRIPTION ID'S TO BUILD PARTS
+//[WORKING ON: MODAL/BUILD TITLE]
 
 //Custom controls
 var generalWidth = "400px"
@@ -153,14 +154,23 @@ function buildCloseBtn() {
     return closeBtn;
 }
 
-function buildModal() {
+function buildTitle(e, el) {
+    if (el.dataset.lightboxTitle) {
+        var title = document.createElement("h2");
+
+    } else return;
+}
+
+function buildModal(e, el) {
     var newContent = document.createElement('div');
     newContent.setAttribute("class", "lightbox__content");
-    ///testing
-    var testText = document.createElement('p');
-    testText.innerHTML = "MODAL";
-    newContent.appendChild(testText);
-    ///
+    buildTitle(e, el);
+    //get and build html block
+    var target = el.dataset.linkHtml;
+    var htmlBlock = document.getElementById(target).cloneNode(true);
+    htmlBlock.id= "cloned";
+    htmlBlock.classList.remove('hidden');
+    newContent.appendChild(htmlBlock);
     return newContent;    
 }
 
