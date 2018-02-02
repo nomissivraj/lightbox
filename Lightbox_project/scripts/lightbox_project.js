@@ -4,9 +4,8 @@
 //save information relevant to each item
 //display content based on data and types
 
-//[TO CONSIDER: MOVE CONTENT DIV FROM MODULES INTO MAIN BUILD PANEL UNLESS UNIQUE CLASSES ARE NEEDED]
 // REMEMBER TO ADD ARIA TITLE AND DESCRIPTION ID'S TO BUILD PARTS
-//[WORKING ON: MODAL/BUILD TITLE]
+//[WORKING ON: ]
 
 /*
   /////////////////////////////////////////////////////////////////////////////
@@ -282,3 +281,13 @@ function closeLightbox() {
     var el = document.getElementsByClassName('lightbox__overlay');
     el[0].remove();
 }
+
+/* close on hitting ESC */
+document.onkeydown = function(e) {
+    // if lightbox is open toggle closed 
+    if (!isOpen()) {return}
+    e = e || window.event;
+    if (e.keyCode == 27) {
+        closeLightbox();
+    }
+};
