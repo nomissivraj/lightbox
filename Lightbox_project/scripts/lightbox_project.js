@@ -4,9 +4,15 @@
 //save information relevant to each item
 //display content based on data and types
 
-// REMEMBER TO ADD ARIA TITLE AND DESCRIPTION ID'S TO BUILD PARTS
 //[WORKING ON: ]
-
+/*TO DO:
+    -NEED TO SET UP IMAGE FOCUS SETTINGS (TAB INDEXING)
+    -RETURN FOCUS TO SAVED POSITION IN DOM ON CLOSE
+    -LIMIT/TRAP TAB SCOPE: User shouldn't be able to tab out of the modal with the keyboard
+    -GALLERY/SLIDESHOW MODE
+    -ANIMATIONS
+    -REMEMBER TO ADD ARIA TITLE AND DESCRIPTION ID'S TO BUILD PARTS
+*/
 /*
   /////////////////////////////////////////////////////////////////////////////
     CONTENTS:
