@@ -156,17 +156,25 @@ function buildCloseBtn() {
 
 function buildTitle(e, el) {
     if (el.dataset.lightboxTitle) {
-        var title = document.createElement("h2");
-
+        var title = document.createElement("h1");
+        title.setAttribute("tabindex", "0");
+        title.innerHTML = el.dataset.lightboxTitle;
+        return title;
     } else return;
 }
 
 function buildModal(e, el) {
+    //Create content div
     var newContent = document.createElement('div');
     newContent.setAttribute("class", "lightbox__content");
-    buildTitle(e, el);
-    //get and build html block
+    //select target to clone
     var target = el.dataset.linkHtml;
+
+    //If title exists/is-set build title
+    if (el.dataset.lightboxTitle) {
+        newContent.appendChild(buildTitle(e, el));
+    }
+    //clone and build content based on target
     var htmlBlock = document.getElementById(target).cloneNode(true);
     htmlBlock.id= "cloned";
     htmlBlock.classList.remove('hidden');
