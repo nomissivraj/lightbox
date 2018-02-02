@@ -8,6 +8,22 @@
 // REMEMBER TO ADD ARIA TITLE AND DESCRIPTION ID'S TO BUILD PARTS
 //[WORKING ON: MODAL/BUILD TITLE]
 
+/*
+  /////////////////////////////////////////////////////////////////////////////
+    CONTENTS:
+    [025]CUSTOMISATION VARIABALS : You can update these values to adjust lightbox dimensions/behaviour
+    --------------------------------
+    [035] INITIALISATION : variables and functions regarding initial opening of lightbox
+    [037] --CORE/DEFAULT Variables
+    --------------------------------
+    [122] CONSTRUCTING THE LIGHTBOX
+    [125] --CORE LIGHTBOX : The core frame/content container for the lightbox - needed in all modes.
+    [162] --MODULAR COMPONENTS : Individual components that are called depending on source data
+    --------------------------------
+    [262] BEHAVIOUR : Functions the manage the behaviour/interaction of the lightbox
+  ///////////////////////////////////////////////////////////////////////////
+*/
+
 //Custom controls
 var generalWidth = "400px"
 var iframeWidth = "90%";
@@ -16,13 +32,20 @@ var mode = "";
 var imageModeAll = true;
 var showCaption = true;
 
+/*
+/////////////////////////////////////////////////////////////////////////////
+    INITIALISATION 
+///////////////////////////////////////
+    CORE/DEVAULT VARIABLES [CAUTION]
+/////////////////////////////////////
+*/
 
 // SET controls & Defaults
 var width = "400px";
 var height = "400px";
 var elements = [];
 var lastId;
-//Build individual components
+
 // Starts by finding all lightbox elements in the DOM identified either by class or 
 function hasClass(el,classname) {
     el = el.classList.toString();
@@ -96,7 +119,14 @@ function beginlightbox(e, el) {
 
 //event listener will have a separate function which calls this one as well as
 //saving the link id that was clicked
+/*
+/////////////////////////////////////////////////////////////////////////////
+    CONSTRUCTING THE LIGHTBOX 
+///////////////////////////////////////////////////////////////////////////
 
+    CORE LIGHTBOX
+/////////////////////////////////////
+*/
 //Build lightbox parts, starting with the core/common frame
 ///Build lightbox Core
 function buildLightbox(e, el, w, h) {
@@ -129,7 +159,11 @@ function buildLightbox(e, el, w, h) {
     lightboxPos();
 }
 
-///Build parts 
+/*
+///////////////////////////////////////
+    MODULAR COMPONENTS
+/////////////////////////////////////
+*/
 
 function buildCaption(e,el) {
     var caption = document.createElement('div');
@@ -222,6 +256,12 @@ function buildSlides() {
     ///
     return newContent; 
 }
+
+/*
+/////////////////////////////////////////////////////////////////////////////
+    BEHAVIOUR 
+///////////////////////////////////////////////////////////////////////////
+*/
 
 // Handle positioning and size of lightbox
 function lightboxPos() {
