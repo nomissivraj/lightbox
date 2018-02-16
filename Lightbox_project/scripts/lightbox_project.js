@@ -70,6 +70,7 @@ function findGallery(e, el) {
     //else return false
 
     //{SWITCHING TO INDEXOF INSTEAD FOR LOOP NOT NECESSARY}
+
     if (el.parentNode.classList.indexOf("group") !== -1) {
         var test = el.classList;
         for (var i = 0; i < test.length; i++) {
@@ -138,7 +139,7 @@ function isOpen() {
     }
 }
 function saveId(id) {
-    console.log(id.path[0]);
+    //console.log(id.path[0]);
     if (!id.path[0].id) {
         //alert("Please give link/button an id") keep this after fix
         return;
@@ -217,7 +218,6 @@ function buildLightbox(e, el, w, h) {
 function buildCaption(e,el) {
     var caption = document.createElement('div');
     caption.setAttribute("class", "lightbox__caption");
-    console.log(el);
     var captionContent = document.createElement('p'); //does this need to be tabindex 0?
     var text = el.alt || el.dataset.lightboxTitle; // getting text
     captionContent.innerHTML = text;
