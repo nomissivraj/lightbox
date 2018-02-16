@@ -48,7 +48,7 @@ var showCaption = true;
 var width = "400px";
 var height = "400px";
 var mode = "";
-var currentGroup = "";
+var currentGroup = "false";
 var elements = [];
 var lastId;
 
@@ -64,38 +64,32 @@ function hasClass(el,classname) {
 
 
 function findGallery(e, el) {
-    //check clicked element parents classlist for substring: 'group'
+    //Considering - [DO FUNCTION THAT FINDS CLASSGROUP and replaces it with classgroup+i]
+
+    //if clicked element parents classlist for substring: 'group'
     //if 'group' not in classlist check parents parent for 'group'
-    //if 'group' exists in classlist return 'group(x)' (not substring)
+    //if 'group' exists in classlist return full 'group(x)' (not substring)
     //else return false
 
     //{SWITCHING TO INDEXOF INSTEAD FOR LOOP NOT NECESSARY}
+    var groupExists = false;
+    var parent = el.parentNode.classList.toString();
+    var parentsParent = el.parentNode.parentNode.classList.toString();
 
-    if (el.parentNode.classList.indexOf("group") !== -1) {
-        var test = el.classList;
-        for (var i = 0; i < test.length; i++) {
-            console.log(test[i].substring(0,5));
-            if (test[i].substring(0,5) === "group") {
-                return true;
-            } else return false;
-	    }
-    } else if (el.parentNode.parentNode.classList.indexOf("group") !== -1) {
-        var test = el.classList;
-        for (var i = 0; i < test.length; i++) {
-            console.log(test[i].substring(0,5));
-            if (test[i].substring(0,5) === "group") {
-                return true;
-            } else return false;
-        }
+    if (parent.indexOf("group") !== -1 || parentsParent.indexOf("group") !== -1) {
+        groupExists = true;
+    } else groupExists = false;
+    console.log("groupExists: " + groupExists);
+    if (groupExists) {
+        //Get specific group including numbersuffix
+        
+        //currentGroup = group(x)
+        return true;
+    } else {
+        return false;
     }
 
-	var test = el.classList;
-	for (var i = 0; i < test.length; i++) {
-		console.log(test[i].substring(0,5));
-		if (test[i].substring(0,5) === "group") {
-			return true;
-		} else return false;
-	}
+    //if groupExists = true then get group number, and it's images and make a list?
 }
 
 function initLightbox(selectedClass) {
@@ -149,21 +143,20 @@ function saveId(id) {
 
 function beginlightbox(e, el) {
     width = generalWidth;
-    console.log(el.parentNode.parentNode);
+    var test = findGallery(e, el);
+    console.log(test);
     //mode = el.nodeName === "IMG" || el.dataset.iframe ? "image" : false;
     if (el.nodeName === "IMG" || el.dataset.imageLink) {
         mode = "image";
-    } else if (el.dataset.linkHtml) {
+    } if (el.dataset.linkHtml) {
         mode = "modal";
-    } else if (el.dataset.iframe) {
+    } if (el.dataset.iframe) {
         mode = "iframe";
-    }/* else if (el.nodeName === "IMG" && el.parentNode.hasClass() || el.parentNode.parentNode ===) {
+    } if (test === true) {
         mode = "gallery";
-        //currentGroup = group
-    }*/ else  mode = false;
-
-    console.log(el.parentNode.parentNode.classList.substring);
-
+        console.log("GALLERY MODE ACTIVE");
+    }
+    console.log(mode);
     buildLightbox(e, el, width, height);
 }
 
@@ -294,7 +287,9 @@ function buildIframe(e, el) {
     return newContent; 
 }
 
-function buildSlides() {
+
+function buildSlides(e, el) {
+    console.log("currentGroup: " + currentGroup);
     //If source is in a gallery, build slides for that gallery
     var newContent = document.createElement('div');
     newContent.setAttribute("class", "lightbox__content");
