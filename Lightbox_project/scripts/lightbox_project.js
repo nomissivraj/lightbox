@@ -64,32 +64,22 @@ function hasClass(el,classname) {
 
 
 function findGallery(e, el) {
-    //Considering - [DO FUNCTION THAT FINDS CLASSGROUP and replaces it with classgroup+i]
-
-    //if clicked element parents classlist for substring: 'group'
-    //if 'group' not in classlist check parents parent for 'group'
-    //if 'group' exists in classlist return full 'group(x)' (not substring)
-    //else return false
-
-    //{SWITCHING TO INDEXOF INSTEAD FOR LOOP NOT NECESSARY}
-    var groupExists = false;
-    var parent = el.parentNode.classList.toString();
-    var parentsParent = el.parentNode.parentNode.classList.toString();
-
-    if (parent.indexOf("group") !== -1 || parentsParent.indexOf("group") !== -1) {
-        groupExists = true;
-    } else groupExists = false;
-    console.log("groupExists: " + groupExists);
-    if (groupExists) {
-        //Get specific group including numbersuffix
-        
-        //currentGroup = group(x)
-        return true;
-    } else {
-        return false;
+    var parentList = el.parentNode.classList;
+    var parentsParentList = el.parentNode.parentNode.classList;
+    for (var i = 0; i < parentsParentList.length; i++) {
+        var current = parentsParentList[i].toString();
+        if (current.indexOf("group") !== -1) {
+            currentGroup = current;
+            return current;
+        } else continue;
     }
-
-    //if groupExists = true then get group number, and it's images and make a list?
+    for (var i = 0; i < parentList.length; i++) {
+        var current = parentsParentList[i].toString();
+        if (current.indexOf("group") !== -1) {
+            currentGroup = current;
+            return current;
+        } else return false;
+    }
 }
 
 function initLightbox(selectedClass) {
@@ -143,8 +133,7 @@ function saveId(id) {
 
 function beginlightbox(e, el) {
     width = generalWidth;
-    var test = findGallery(e, el);
-    console.log(test);
+    var currentGallery = findGallery(e, el);
     //mode = el.nodeName === "IMG" || el.dataset.iframe ? "image" : false;
     if (el.nodeName === "IMG" || el.dataset.imageLink) {
         mode = "image";
@@ -152,9 +141,8 @@ function beginlightbox(e, el) {
         mode = "modal";
     } if (el.dataset.iframe) {
         mode = "iframe";
-    } if (test === true) {
+    } if (currentGallery !== false) {
         mode = "gallery";
-        console.log("GALLERY MODE ACTIVE");
     }
     console.log(mode);
     buildLightbox(e, el, width, height);
