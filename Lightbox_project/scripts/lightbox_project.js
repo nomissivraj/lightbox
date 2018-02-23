@@ -12,6 +12,7 @@
     -GALLERY/SLIDESHOW MODE
     -ANIMATIONS
     -REMEMBER TO ADD ARIA TITLE AND DESCRIPTION ID'S TO BUILD PARTS
+    -TEST GALLERY MODE IF GROUP IS DIRECT PARENT OF IMAGES
 */
 /*
   /////////////////////////////////////////////////////////////////////////////
@@ -62,14 +63,27 @@ function hasClass(el,classname) {
 
 //el = el.parentNode.classList : el.parentNode.parentNode.classList;
 
-
+//MOVE ME LATER:
+var galleryIndex;
+var galleryImages;
+//
 function findGallery(e, el) {
+    //ALSO NOW NEED TO GET IMAGE INDEX
+
     var parentList = el.parentNode.classList;
     var parentsParentList = el.parentNode.parentNode.classList;
     for (var i = 0; i < parentsParentList.length; i++) {
         var current = parentsParentList[i].toString();
         if (current.indexOf("group") !== -1) {
             currentGroup = current;
+            var children = el.parentNode.parentNode.children;
+            galleryImages = children;
+            for (var i = 0; i < children.length; i++) {
+                if (el.parentNode === children[i]) {
+                    galleryIndex = i;
+                }
+            }
+
             return current;
         } else continue;
     }
@@ -77,6 +91,12 @@ function findGallery(e, el) {
         var current = parentsParentList[i].toString();
         if (current.indexOf("group") !== -1) {
             currentGroup = current;
+            var children = el.parentNode.children;
+            for (var i = 0; i < children.length; i++) {
+                if (el.parentNode === children[i]) {
+                    galleryIndex = i;
+                }
+            }
             return current;
         } else return false;
     }
@@ -284,7 +304,34 @@ function buildSlides(e, el) {
     ///testing
     var testText = document.createElement('p');
     testText.innerHTML = "GALLERY";
+    
+    //NEED TO RESOLVE IMAGE URL BASED ON GALLERYINDEX VAR
+    var image = document.createElement('IMG');
+    image.src = galleryImages[galleryIndex].children[0].src;
+    console.log(galleryImages[galleryIndex].children[0].src);
+    newContent.appendChild(image);
+
+    var previous = document.createElement('button');
+    previous.innerHTML = "previous";
+    previous.addEventListener("click", function() {
+        //function to update galleryIndex (-1 > min)
+        //that will grab the current image and update it
+        console.log(galleryIndex);
+    });
+    
+    var next = document.createElement('button');
+    next.innerHTML = "next";
+    next.addEventListener("click", function() {
+        //function to update galleryIndex (+1 < max)
+        //that will grab the current image and update it
+        console.log(galleryIndex);
+    });
+    
+
     newContent.appendChild(testText);
+    newContent.appendChild(image);
+    newContent.appendChild(previous);
+    newContent.appendChild(next);
     ///
     return newContent; 
 }
