@@ -307,24 +307,21 @@ function buildSlides(e, el) {
     
     //NEED TO RESOLVE IMAGE URL BASED ON GALLERYINDEX VAR
     var image = document.createElement('IMG');
+    console.log("gindex: " + galleryIndex);
     image.src = galleryImages[galleryIndex].children[0].src;
     console.log(galleryImages[galleryIndex].children[0].src);
     newContent.appendChild(image);
 
     var previous = document.createElement('button');
     previous.innerHTML = "previous";
-    previous.addEventListener("click", function() {
-        //function to update galleryIndex (-1 > min)
-        //that will grab the current image and update it
-        console.log(galleryIndex);
+    previous.addEventListener("click", function(event) {
+          previousItem(image);
     });
     
     var next = document.createElement('button');
     next.innerHTML = "next";
-    next.addEventListener("click", function() {
-        //function to update galleryIndex (+1 < max)
-        //that will grab the current image and update it
-        console.log(galleryIndex);
+    next.addEventListener("click", function(event) {
+        nextItem(image);
     });
     
 
@@ -341,6 +338,27 @@ function buildSlides(e, el) {
     BEHAVIOUR 
 ///////////////////////////////////////////////////////////////////////////
 */
+
+//Next function
+function nextItem(currentImage) {
+    galleryIndex +=1;
+    if (galleryIndex == galleryImages.length){
+        galleryIndex = 0;
+    }
+    //update current image with new gallery index
+    currentImage.src = galleryImages[galleryIndex].children[0].src;
+}
+
+function previousItem(currentImage) {
+    galleryIndex -=1;
+    if (galleryIndex < 0){
+        galleryIndex = galleryImages.length-1;
+    }
+    //update current image with new gallery index
+    currentImage.src = galleryImages[galleryIndex].children[0].src;
+}
+
+//Previous function
 
 // Handle positioning and size of lightbox
 function lightboxPos() {
