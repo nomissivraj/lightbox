@@ -6,13 +6,16 @@
 
 //[WORKING ON: ]
 /*TO DO:
+    -GET NEXT/PREVIOUS KEYBOARD WORKING
+    -SORT GALLERY MODE STYLINGS OUT
+    -SET SO THAT AREA OUTSIDE - CLICKABLE - TO CLOSE IS BASED ON MODE,
+        SHOULD BE OUTSIDE OF IMAGE on GALLERY, ELSE OUTSIDE OF CONTAINER.
     -NEED TO SET UP IMAGE FOCUS SETTINGS (TAB INDEXING)
     -RETURN FOCUS TO SAVED POSITION IN DOM ON CLOSE
     -LIMIT/TRAP TAB SCOPE: User shouldn't be able to tab out of the modal with the keyboard
-    -GALLERY/SLIDESHOW MODE
+    -GALLERY/SLIDESHOW MODE - ADDED, NOW IMPROVE
     -ANIMATIONS
     -REMEMBER TO ADD ARIA TITLE AND DESCRIPTION ID'S TO BUILD PARTS
-    -TEST GALLERY MODE IF GROUP IS DIRECT PARENT OF IMAGES
 */
 /*
   /////////////////////////////////////////////////////////////////////////////
@@ -201,6 +204,7 @@ function buildLightbox(e, el, w, h) {
     
     
     // Add content container to the lightbox
+    lightboxEl.classList += " lightbox__content--"+mode;
     lightboxElCont.appendChild(lightboxEl);
     lightboxElCont.appendChild(buildCloseBtn());
     // Add Lightbox to page
@@ -312,13 +316,15 @@ function buildSlides(e, el) {
     console.log(galleryImages[galleryIndex].children[0].src);
     newContent.appendChild(image);
 
-    var previous = document.createElement('button');
+    var previous = document.createElement('a');
+    previous.setAttribute('class', 'previous');
     previous.innerHTML = "previous";
     previous.addEventListener("click", function(event) {
           previousItem(image);
     });
     
-    var next = document.createElement('button');
+    var next = document.createElement('a');
+    next.setAttribute('class', 'next');
     next.innerHTML = "next";
     next.addEventListener("click", function(event) {
         nextItem(image);
@@ -329,6 +335,8 @@ function buildSlides(e, el) {
     newContent.appendChild(image);
     newContent.appendChild(previous);
     newContent.appendChild(next);
+    newContent.style.minWidth = "initial";
+    width = generalWidth;
     ///
     return newContent; 
 }
@@ -348,7 +356,7 @@ function nextItem(currentImage) {
     //update current image with new gallery index
     currentImage.src = galleryImages[galleryIndex].children[0].src;
 }
-
+//previous function
 function previousItem(currentImage) {
     galleryIndex -=1;
     if (galleryIndex < 0){
@@ -357,8 +365,6 @@ function previousItem(currentImage) {
     //update current image with new gallery index
     currentImage.src = galleryImages[galleryIndex].children[0].src;
 }
-
-//Previous function
 
 // Handle positioning and size of lightbox
 function lightboxPos() {
@@ -387,5 +393,18 @@ document.onkeydown = function(e) {
     e = e || window.event;
     if (e.keyCode == 27) {
         closeLightbox();
+    }
+
+
+    /* Gallery Previous/Next - ARROW KEYS */
+    //37 = left 39 = right
+    console.log("TEST");
+    // if lightbox is open toggle closed 
+    if (!isOpen()) {return}
+    e = e || window.event;
+    if (e.keyCode == 39) {
+        nextItem();
+    } else if (e.keyCode == 37) {
+        previousItem();
     }
 };
