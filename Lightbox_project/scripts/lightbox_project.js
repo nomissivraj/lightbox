@@ -6,6 +6,9 @@
 
 //[WORKING ON: ]
 /*TO DO:
+    -READDRESS GALLERY DETERMINATION LOOK AT: https://stackoverflow.com/questions/2234979/how-to-check-in-javascript-if-one-element-is-contained-within-another?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+        IT SHOWS A BETTER WAY TO IDENTIFY IF ANY PARENT IS 'gallery'
+        - NEED TO LOOK AT WHERE GALLERY IS GETTING CALLED/SET 
     -SORT GALLERY MODE STYLINGS OUT
     -SET SO THAT AREA OUTSIDE - CLICKABLE - TO CLOSE IS BASED ON MODE,
         SHOULD BE OUTSIDE OF IMAGE on GALLERY, ELSE OUTSIDE OF CONTAINER.
@@ -70,8 +73,7 @@ function hasClass(el,classname) {
 var galleryIndex;
 var galleryImages;
 //
-function findGallery(e, el) {
-    //ALSO NOW NEED TO GET IMAGE INDEX
+function checkIfGallery(e, el) {
 
     var parentList = el.parentNode.classList;
     var parentsParentList = el.parentNode.parentNode.classList;
@@ -157,7 +159,8 @@ function saveId(id) {
 
 function beginlightbox(e, el) {
     width = generalWidth;
-    var currentGallery = findGallery(e, el);
+    var isGallery = checkIfGallery(e, el);
+
     //mode = el.nodeName === "IMG" || el.dataset.iframe ? "image" : false;
     if (el.nodeName === "IMG" || el.dataset.imageLink) {
         mode = "image";
@@ -165,10 +168,10 @@ function beginlightbox(e, el) {
         mode = "modal";
     } if (el.dataset.iframe) {
         mode = "iframe";
-    } if (currentGallery !== false) {
+    } if (isGallery !== false || undefined) {
         mode = "gallery";
     }
-    console.log(mode);
+    console.log("current mode: " + mode);
     buildLightbox(e, el, width, height);
 }
 
