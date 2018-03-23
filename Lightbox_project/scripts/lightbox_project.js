@@ -6,7 +6,6 @@
 
 //[WORKING ON: ]
 /*TO DO:
-    -DISABLE SCROLLING WHEN OPEN
     -SORT GALLERY MODE STYLINGS OUT
     -SET SO THAT AREA OUTSIDE - CLICKABLE - TO CLOSE IS BASED ON MODE,
         SHOULD BE OUTSIDE OF IMAGE on GALLERY, ELSE OUTSIDE OF CONTAINER.
@@ -146,6 +145,7 @@ function isOpen() {
         return false;
     }
 }
+
 function saveId(id) {
     //console.log(id.path[0]);
     if (!id.path[0].id) {
@@ -184,7 +184,11 @@ function beginlightbox(e, el) {
 */
 //Build lightbox parts, starting with the core/common frame
 ///Build lightbox Core
+
 function buildLightbox(e, el, w, h) {
+    var body = document.getElementsByTagName('body')[0];
+    body.classList.toggle('noscroll');
+
     var lightboxElCont = document.createElement('div');
     lightboxElCont.setAttribute("class", "lightbox__overlay");
     /// give role and aria attr
@@ -386,6 +390,8 @@ function lightboxPos() {
 function closeLightbox() {
     var el = document.getElementsByClassName('lightbox__overlay');
     el[0].remove();
+    var body = document.getElementsByTagName('body')[0];
+    body.classList.toggle('noscroll');
 }
 
 /* close on hitting ESC */
