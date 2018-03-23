@@ -6,7 +6,7 @@
 
 //[WORKING ON: ]
 /*TO DO:
-    -GET NEXT/PREVIOUS KEYBOARD WORKING
+    -DISABLE SCROLLING WHEN OPEN
     -SORT GALLERY MODE STYLINGS OUT
     -SET SO THAT AREA OUTSIDE - CLICKABLE - TO CLOSE IS BASED ON MODE,
         SHOULD BE OUTSIDE OF IMAGE on GALLERY, ELSE OUTSIDE OF CONTAINER.
@@ -53,6 +53,7 @@ var width = "400px";
 var height = "400px";
 var mode = "";
 var currentGroup = "false";
+var currentImage;
 var elements = [];
 var lastId;
 
@@ -318,14 +319,14 @@ function buildSlides(e, el) {
 
     var previous = document.createElement('a');
     previous.setAttribute('class', 'previous');
-    previous.innerHTML = "previous";
+    previous.innerHTML = "<";
     previous.addEventListener("click", function(event) {
           previousItem(image);
     });
     
     var next = document.createElement('a');
     next.setAttribute('class', 'next');
-    next.innerHTML = "next";
+    next.innerHTML = ">";
     next.addEventListener("click", function(event) {
         nextItem(image);
     });
@@ -337,6 +338,7 @@ function buildSlides(e, el) {
     newContent.appendChild(next);
     newContent.style.minWidth = "initial";
     width = generalWidth;
+    currentImage = image;
     ///
     return newContent; 
 }
@@ -387,7 +389,7 @@ function closeLightbox() {
 }
 
 /* close on hitting ESC */
-document.onkeydown = function(e) {
+document.onkeyup = function(e) {
     // if lightbox is open toggle closed 
     if (!isOpen()) {return}
     e = e || window.event;
@@ -398,13 +400,12 @@ document.onkeydown = function(e) {
 
     /* Gallery Previous/Next - ARROW KEYS */
     //37 = left 39 = right
-    console.log("TEST");
-    // if lightbox is open toggle closed 
-    if (!isOpen()) {return}
-    e = e || window.event;
+    
     if (e.keyCode == 39) {
-        nextItem();
+        console.log("TEST");
+        nextItem(currentImage);
     } else if (e.keyCode == 37) {
-        previousItem();
+        console.log("TEST1");
+        previousItem(currentImage);
     }
 };
