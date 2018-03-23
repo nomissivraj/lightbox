@@ -72,16 +72,21 @@
 
 .lightbox__content .next,
 .lightbox__content .previous {
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none;
+    -webkit-user-select: none;
+    /*Safari*/-moz-user-select: none;
+    /*Firefox*/-ms-user-select: none;
+    /*IE10+/Edge*/user-select: none;
     cursor: pointer;
     top: 50%;
     transform: translateY(-50%);
     padding: 10px;
     background: #eaeaea;
     color: #000;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
 .lightbox__content .next:hover,
 .lightbox__content .previous:hover {
@@ -92,21 +97,11 @@
 .lightbox__content .next {
     position: absolute;
     right: 0;
-    border-radius: 5px 0 0 5px;
-    -webkit-border-radius: 5px 0 0 5px;
-    -moz-border-radius: 5px 0 0 5px;
-    -ms-border-radius: 5px 0 0 5px;
-    -o-border-radius: 5px 0 0 5px;
 }
 
 .lightbox__content .previous {
     position: absolute;
     left: 0;
-    border-radius: 0 5px 5px 0;
-    -webkit-border-radius: 0 5px 5px 0;
-    -moz-border-radius: 0 5px 5px 0;
-    -ms-border-radius: 0 5px 5px 0;
-    -o-border-radius: 0 5px 5px 0;
 }
 
 .lightbox__content img {
