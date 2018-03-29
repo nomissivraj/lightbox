@@ -6,6 +6,9 @@
 
 //[WORKING ON: ]
 /*TO DO:
+Experimenting with alternative way of finding gallery
+ - successfully returns if image is in a gallery or not... but need to find ambiguous gallery
+and work out how to show images/set indexes as old checkifGallery funciton does
     -READDRESS GALLERY DETERMINATION LOOK AT: https://stackoverflow.com/questions/2234979/how-to-check-in-javascript-if-one-element-is-contained-within-another?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
         IT SHOWS A BETTER WAY TO IDENTIFY IF ANY PARENT IS 'gallery'
         - NEED TO LOOK AT WHERE GALLERY IS GETTING CALLED/SET 
@@ -59,6 +62,19 @@ var currentImage;
 var elements = [];
 var lastId;
 
+/* IE WORKAROUND FOR .remove() */
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+}
+/* END OF IE WORKAROUND */
+
 // Starts by finding all lightbox elements in the DOM identified either by class or 
 function hasClass(el,classname) {
     el = el.classList.toString();
@@ -73,7 +89,13 @@ function hasClass(el,classname) {
 var galleryIndex;
 var galleryImages;
 //
+
 function checkIfGallery(e, el) {
+    var gallery = document.getElementsByClassName('group-2')[0];
+    return (el === gallery) ? false : gallery.contains(el);
+}
+
+function checkIfGalleryOLD(e, el) {
 
     var parentList = el.parentNode.classList;
     var parentsParentList = el.parentNode.parentNode.classList;
@@ -160,7 +182,7 @@ function saveId(id) {
 function beginlightbox(e, el) {
     width = generalWidth;
     var isGallery = checkIfGallery(e, el);
-
+    console.log("blarg "+isGallery);
     //mode = el.nodeName === "IMG" || el.dataset.iframe ? "image" : false;
     if (el.nodeName === "IMG" || el.dataset.imageLink) {
         mode = "image";
