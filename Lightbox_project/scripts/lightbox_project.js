@@ -91,6 +91,9 @@ var galleryImages;
 //
 
 function checkIfGallery(e, el) {
+    //Currently have a good method of spotting that the image clicked is within a gallery.
+    //Just need to ambiguate group-2 to group and any number - then need to set the image and gallery index
+    ///... halp!
     var gallery = document.getElementsByClassName('group-2')[0];
     return (el === gallery) ? false : gallery.contains(el);
 }
