@@ -94,8 +94,15 @@ function checkIfGallery(e, el) {
     //Currently have a good method of spotting that the image clicked is within a gallery.
     //Just need to ambiguate group-2 to group and any number - then need to set the image and gallery index
     ///... halp!
-    var gallery = document.getElementsByClassName('group-2')[0];
-    return (el === gallery) ? false : gallery.contains(el);
+    var gallery = document.getElementsByClassName('gallery');
+    var galleryFound;
+    for (var i = 0; i < gallery.length; i++) {   
+        if (gallery[i].contains(el)){
+            galleryFound = true;
+        }
+    }
+    return galleryFound;
+    //return (el === gallery) ? false : gallery.contains(el);
 }
 
 function checkIfGalleryOLD(e, el) {
@@ -185,7 +192,7 @@ function saveId(id) {
 function beginlightbox(e, el) {
     width = generalWidth;
     var isGallery = checkIfGallery(e, el);
-    console.log("blarg "+isGallery);
+    console.log("it is a gallery? "+isGallery);
     //mode = el.nodeName === "IMG" || el.dataset.iframe ? "image" : false;
     if (el.nodeName === "IMG" || el.dataset.imageLink) {
         mode = "image";
