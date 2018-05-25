@@ -57,7 +57,7 @@ var showCaption = true;
 var width = "400px";
 var height = "400px";
 var mode = "";
-var currentGroup = "false";
+//var currentGroup = "false";
 var currentImage;
 var elements = [];
 var lastId;
@@ -87,7 +87,7 @@ function hasClass(el,classname) {
 
 //MOVE ME LATER:
 var galleryIndex;
-var galleryImages;
+var galleryImages = [];
 //
 
 function checkIfGallery(e, el) {
@@ -96,9 +96,27 @@ function checkIfGallery(e, el) {
     ///... halp!
     var gallery = document.getElementsByClassName('gallery');
     var galleryFound;
+    var currentGallery;
+    galleryImages = [];// clear list of old selected gallery
+    var children;
     for (var i = 0; i < gallery.length; i++) {   
         if (gallery[i].contains(el)){
             galleryFound = true;
+            galleryIndex = i;
+
+            //FIND ALL IMAGES WITHIN selected gallery
+            console.log(gallery[galleryIndex]);
+            children = gallery[galleryIndex].children || gallery[galleryIndex];            
+        }
+    }
+
+    for (let i = 0; i < children.length; i++) {
+        galleryImages.push(children[i].querySelector("IMG"));
+        
+        //Set current image to the one clicked within this list
+        if (children[i].contains(el)) {
+            console.log("fudge? " + i);
+            currentImage = i;
         }
     }
     return galleryFound;
@@ -192,7 +210,7 @@ function saveId(id) {
 function beginlightbox(e, el) {
     width = generalWidth;
     var isGallery = checkIfGallery(e, el);
-    console.log("it is a gallery? "+isGallery);
+    console.log("it is a gallery? " + isGallery);
     //mode = el.nodeName === "IMG" || el.dataset.iframe ? "image" : false;
     if (el.nodeName === "IMG" || el.dataset.imageLink) {
         mode = "image";
@@ -200,7 +218,7 @@ function beginlightbox(e, el) {
         mode = "modal";
     } if (el.dataset.iframe) {
         mode = "iframe";
-    } if (isGallery !== false || undefined) {
+    } if (isGallery === false || isGallery !== undefined) {
         mode = "gallery";
     }
     console.log("current mode: " + mode);
@@ -221,6 +239,7 @@ function beginlightbox(e, el) {
 ///Build lightbox Core
 
 function buildLightbox(e, el, w, h) {
+    console.log("curImage: " + currentImage);
     var body = document.getElementsByTagName('body')[0];
     body.classList.toggle('noscroll');
 
@@ -341,7 +360,6 @@ function buildIframe(e, el) {
 
 
 function buildSlides(e, el) {
-    console.log("currentGroup: " + currentGroup);
     //If source is in a gallery, build slides for that gallery
     var newContent = document.createElement('div');
     newContent.setAttribute("class", "lightbox__content");
@@ -352,8 +370,9 @@ function buildSlides(e, el) {
     //NEED TO RESOLVE IMAGE URL BASED ON GALLERYINDEX VAR
     var image = document.createElement('IMG');
     console.log("gindex: " + galleryIndex);
-    image.src = galleryImages[galleryIndex].children[0].src;
-    console.log(galleryImages[galleryIndex].children[0].src);
+
+    image.src = galleryImages[currentImage].src;
+    console.log(galleryImages[currentImage].src);
     newContent.appendChild(image);
 
     var previous = document.createElement('a');
@@ -390,12 +409,13 @@ function buildSlides(e, el) {
 
 //Next function
 function nextItem(currentImage) {
+    console.log(galleryIndex);
     galleryIndex +=1;
     if (galleryIndex == galleryImages.length){
         galleryIndex = 0;
     }
     //update current image with new gallery index
-    currentImage.src = galleryImages[galleryIndex].children[0].src;
+    currentImage.src = galleryImages[galleryIndex].src;
 }
 //previous function
 function previousItem(currentImage) {
@@ -404,7 +424,7 @@ function previousItem(currentImage) {
         galleryIndex = galleryImages.length-1;
     }
     //update current image with new gallery index
-    currentImage.src = galleryImages[galleryIndex].children[0].src;
+    currentImage.src = galleryImages[galleryIndex].src;
 }
 
 // Handle positioning and size of lightbox
